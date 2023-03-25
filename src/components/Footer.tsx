@@ -65,7 +65,7 @@ const Footer = () => {
         <div className='hidden gap-4 flex-nowrap justify-between text-white py-4 items-center sm:flex lg:flex-row'>
           <div>
             <img
-              className='w-36'
+              className='h-8 hover:scale-110'
               src={footer}
               alt='food logo'
               data-testid='logo'
