@@ -1,5 +1,6 @@
 import { VENDOR } from '../utils/types';
-import Rating from './Rating';
+import { Rating } from './';
+import defaultImage from '../assets/default.jpg';
 
 const VendorCard = ({
   id,
@@ -20,7 +21,7 @@ const VendorCard = ({
     >
       <div className='w-24 h-24 relative md:w-64 md:h-40'>
         <img
-          src={logo}
+          src={logo ? logo : defaultImage}
           alt='restaurant-img'
           className='w-[88px] h-24 md:h-full md:w-full rounded-md md:rounded-none'
         />
@@ -38,7 +39,6 @@ const VendorCard = ({
         <div className='flex md:justify-between items-center gap-2 font-semibold mt-1 md:mt-3.5'>
           <Rating rating={ratingValue} ratingCount={ratingCount} />
           <span className='text-xs text-gray-light'>•</span>
-
           <span className='hidden md:inline-block text-xs text-gray-light'>
             MIN ORDER {minOrderValue}
           </span>
