@@ -18,16 +18,6 @@ const Header = () => {
             </Link>
           </li>
           <li className='hidden sm:inline'>
-            <Link to='account'>
-              <div className='flex items-center gap-2 hover:text-orange'>
-                <span className='material-symbols-outlined font-medium'>
-                  account_circle
-                </span>
-                <span className='font-medium'>Sign In</span>
-              </div>
-            </Link>
-          </li>
-          <li className='hidden sm:inline'>
             <Link to='checkout'>
               <div className='flex items-center gap-2 hover:text-orange'>
                 <span className='material-symbols-outlined font-medium'>
