@@ -23,7 +23,7 @@ const Menu = () => {
   }, [isSuccess]);
 
   return (
-    <div className='pt-20 mx-0 px-0 py-2 sm:mx-4 sm:px-4 md:px-12 md:mx-12 lg:px-24 lg:mx-24 xl:px-36 xl:mx-36'>
+    <div className='pt-20 mx-0 px-0 py-2 mb-8 sm:mx-4 sm:px-4 md:px-12 md:mx-12 lg:px-24 lg:mx-24 xl:px-36 xl:mx-36'>
       {isLoading && (
         <div className='flex flex-col items-stretch'>
           {Array(16)
