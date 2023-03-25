@@ -1,5 +1,6 @@
 export { default as Address } from './Address';
 export { default as Category } from './Category';
+export { default as Checkout } from './Checkout';
 export { default as Error } from './Error';
 export { default as Footer } from './Footer';
 export { default as Header } from './Header';

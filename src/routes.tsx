@@ -1,6 +1,6 @@
 import { createBrowserRouter } from 'react-router-dom';
 import App, { appLoader } from './App';
-import { Error, Home, Menu } from './components';
+import { Checkout, Error, Home, Menu } from './components';
 
 export const router = createBrowserRouter([
   {
@@ -16,6 +16,10 @@ export const router = createBrowserRouter([
       {
         path: 'menu',
         element: <Menu />,
+      },
+      {
+        path: 'checkout',
+        element: <Checkout />,
       },
     ],
   },

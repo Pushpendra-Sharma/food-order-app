@@ -1,5 +1,11 @@
+import { useAppSelector } from '../redux/hooks';
 import { ITEM } from '../utils/types';
 import { VegOrNonVeg } from './';
+
+interface Props extends ITEM {
+  removeFromCart: () => void;
+  addToCart: () => void;
+}
 
 const Item = ({
   id,
@@ -14,8 +20,13 @@ const Item = ({
   cuisine,
   schedules,
   customisations,
-}: ITEM) => {
-  let quantityInCart = 5;
+  removeFromCart,
+  addToCart
+}: Props) => {
+
+  const cartItems = useAppSelector(state => state.cart.items);
+  const quantityInCart = cartItems[id]?.quantity;
+
   return (
     <div className='p-4 flex flex-col md:flex-row gap-4 justify-between shadow-md rounded-md'>
       <div className=''>
@@ -35,19 +46,19 @@ const Item = ({
       </div>
       <div className='w-64 flex flex-col items-center'>
         <img src={image} alt='menu-img' className='rounded-md w-full' />
-        <div className='relative bottom-4 w-24 bg-white shadow-md rounded text-green'>
+         <div className='relative bottom-4 w-24 bg-white shadow-md rounded text-green'>
           {quantityInCart > 0 ? (
             <div className='flex justify-between font-bold w-full'>
-              <button className='text-gray py-2 px-4'>
+              <button className='text-gray py-2 px-4' onClick={removeFromCart}>
                 -
               </button>
               <span className='py-2'>{quantityInCart}</span>
-              <button className='py-2 px-4'>
+              <button className='py-2 px-4' onClick={addToCart}>
                 +
               </button>
             </div>
           ) : (
-            <button className='text-center w-full p-2'>
+            <button className='text-center w-full p-2' onClick={addToCart}>
               ADD
             </button>
           )}
