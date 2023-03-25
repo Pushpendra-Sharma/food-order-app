@@ -23,7 +23,7 @@ const Home = () => {
           {isSuccess && (
             <>
               {data.result.vendors.map((item: VENDOR) => (
-                <Link to={`restaurant/${item.id}`} key={item.id}>
+                <Link to={`menu`} key={item.id}>
                   <VendorCard {...item} />
                 </Link>
               ))}
