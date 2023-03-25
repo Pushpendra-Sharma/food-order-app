@@ -1,11 +1,13 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { VendorCard, ShimmerRestaurant } from '.';
+import { OutletCard, ShimmerRestaurant } from '.';
 import { useAppDispatch, useAppSelector } from '../redux/hooks';
 import { fetchRestaurantList } from '../redux/features/restaurants/restaurantSlice';
-import { VENDOR } from '../utils/types';
+import { OUTLET } from '../utils/types';
 
 const Home = () => {
+  const [outlets, setOutlets] = useState<OUTLET[]>([]);
+
   const { data, isLoading, error, isSuccess } = useAppSelector(
     state => state.restaurants
   );
@@ -16,15 +18,26 @@ const Home = () => {
     dispatch(fetchRestaurantList());
   }, []);
 
+  useEffect(() => {
+    let arr = [];
+    for (const vendor of data.result.vendors) {
+      const vendorOutlets = vendor.outlets;
+      for (let i = 0; i < vendorOutlets.length; i++) {
+        arr.push(vendorOutlets[i]);
+      }
+    }
+    setOutlets(arr);
+  }, [data, isSuccess]);
+
   return (
     <div className='my-20'>
       <div className='mx-0 px-4 py-2 sm:mx-4 md:px-8 md:mx-8 lg:px-12 lg:mx-16'>
         <div className='flex flex-col gap-8 md:flex-row md:flex-wrap'>
           {isSuccess && (
             <>
-              {data.result.vendors.map((item: VENDOR) => (
+              {outlets.map((item: OUTLET) => (
                 <Link to={`menu`} key={item.id}>
-                  <VendorCard {...item} />
+                  <OutletCard {...item} />
                 </Link>
               ))}
             </>
