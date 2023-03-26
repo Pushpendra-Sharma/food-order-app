@@ -47,7 +47,7 @@ const Checkout = () => {
         <>
           <div className='flex gap-1 justify-between items-center m-4 shadow-sm rounded p-4'>
             <button
-              className='px-4 py-1 rounded-lg bg-gray'
+              className='px-4 py-1 rounded-lg bg-gray-light'
               onClick={() => dispatch(clear())}
             >
               Clear
@@ -67,6 +67,7 @@ const Checkout = () => {
               const { item, quantity } = obj;
               return (
                 <Item
+                  key={item.id}
                   {...item}
                   addToCart={() => dispatch(addItem(item))}
                   removeFromCart={() => dispatch(removeItem(item))}

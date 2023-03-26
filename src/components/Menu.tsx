@@ -36,7 +36,7 @@ const Menu = () => {
       {isSuccess && (
         <div className='flex flex-wrap items-stretch '>
           {categoryItems.map(category => (
-            <Category {...category} />
+            <Category {...category} key={category.name} />
           ))}
         </div>
       )}
