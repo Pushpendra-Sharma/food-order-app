@@ -18,40 +18,34 @@ const OutletCard = ({
   specialityImg,
 }: OUTLET) => {
   return (
-    <div
-      id='restaurant'
-      className='flex gap-4 items-center md:items-stretch md:w-72 md:flex-col p-4 hover:shadow-md border border-white hover:border-[#d3d5df]'
-    >
+    <div className='flex gap-4 items-center md:items-stretch w-full md:w-72 md:flex-col p-4 hover:shadow-md border border-white hover:border-[#d3d5df]'>
       <div className='w-24 h-24 relative md:w-64 md:h-40'>
         <img
           src={logo ? logo : defaultImage}
           alt='restaurant-img'
           className='w-[88px] h-24 md:h-full md:w-full rounded-md md:rounded-none'
         />
-        <span className='material-symbols-outlined absolute top-1 right-2 text-white md:hidden'>
-          favorite
-        </span>
       </div>
-      <div className='flex flex-col md:gap-1'>
+      <div className='flex flex-col w-full md:gap-1'>
         <div className='font-semibold md:font-medium text-gray-ultra text-[15px] md:text-[17px] truncate w-36 md:w-full'>
           {name}
         </div>
-        <div className='hidden md:block text-[13px] text-gray-light font-light'>
+        <div className='text-[13px] text-gray-light font-light hidden md:block'>
           {cuisines.join(', ')}
         </div>
-        <div className='flex md:justify-between items-center gap-1 font-semibold mt-1 md:mt-3.5'>
-          <Rating rating={ratingValue} ratingCount={ratingCount} />
+        <Rating rating={ratingValue} ratingCount={ratingCount} />
+        <div className='flex md:justify-between items-center gap-1 font-semibold mt-1'>
+          {deliveryCharge > 0 ? (
+            <span className='text-brown text-sm '>₹{deliveryCharge}</span>
+          ) : (
+            <span className='text-green text-sm'>Free Delivery</span>
+          )}
           <span className='text-xs text-gray-light'>•</span>
-          <span className='hidden md:inline-block text-xs text-gray-light'>
+          <span className='text-xs text-gray-light'>
             MIN ORDER ₹{minOrderValue}
           </span>
         </div>
-        {deliveryCharge >0? (
-          <div className='hidden md:block text-brown text-sm border-[#e9e9eb] border-t pt-3.5 mt-3.5'>₹{deliveryCharge}</div>
-        ) : (
-          <div className='hidden md:block text-green text-sm border-[#e9e9eb] border-t pt-3.5 mt-3.5'>Free Delivery</div>
-        )}
-        <div className='w-36 font-extralight text-[13px] text-gray-light truncate overflow-hidden md:hidden mt-0.5'>
+        <div className='w-36 font-extralight text-[13px] text-gray-light truncate overflow-hidden mt-0.5 md:hidden'>
           {cuisines.join(', ')}
         </div>
       </div>

@@ -27,14 +27,6 @@ const Footer = () => {
             </div>
           </Link>
         </li>
-        <li>
-          <Link to='support'>
-            <div className='flex flex-col items-center gap-[1px]'>
-              <span className='material-symbols-outlined'>contact_support</span>
-              <span>Help</span>
-            </div>
-          </Link>
-        </li>
       </ul>
       <div className='mx-0 hidden flex-col sm:flex sm:mx-4 md:mx-8 lg:mx-16'>
         <div className='hidden flex-wrap gap-12 justify-between border-b-[1px] border-white py-4 sm:flex'>

@@ -25,6 +25,7 @@ const Checkout = () => {
 
   const handleOrder = () => {
     dispatch(placeOrder());
+    dispatch(clear());
   };
 
   return (
@@ -38,7 +39,7 @@ const Checkout = () => {
           </span>
           <p className='text-green font-bold'>{message}</p>
           <Link to='/'>
-            <span className='border border-orange p-6 py-1 rounded-lg bg-orange'>
+            <span className='border border-orange p-6 py-1 rounded-lg bg-orange text-white'>
               Home
             </span>
           </Link>
@@ -47,7 +48,7 @@ const Checkout = () => {
         <>
           <div className='flex gap-1 justify-between items-center m-4 shadow-sm rounded p-4'>
             <button
-              className='px-4 py-1 rounded-lg bg-gray-light'
+              className='px-4 py-1 rounded-lg bg-gray-light text-white'
               onClick={() => dispatch(clear())}
             >
               Clear
@@ -55,7 +56,7 @@ const Checkout = () => {
             <span className=''>Items in cart: {cartItemsArray.length}</span>
             <span className=''>Total Price: ₹{totalPrice.toFixed(0)}</span>
             <button
-              className='border border-orange p-4 py-1 rounded-lg bg-orange disabled:opacity-80'
+              className='border border-orange p-4 py-1 rounded-lg bg-orange disabled:opacity-80 text-white'
               onClick={handleOrder}
               disabled={cartItemsArray.length === 0}
             >

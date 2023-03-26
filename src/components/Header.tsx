@@ -8,16 +8,6 @@ const Header = () => {
         <Address name='Home' location='Sector-1, Noida, U.P.' />
         <ul className='flex justify-between shrink items-center gap-8 text-gray-medium'>
           <li className='hidden sm:inline'>
-            <Link to='support'>
-              <div className='flex items-center gap-2 hover:text-orange'>
-                <span className='material-symbols-outlined font-medium'>
-                  contact_support
-                </span>
-                <span className='font-medium'>Help</span>
-              </div>
-            </Link>
-          </li>
-          <li className='hidden sm:inline'>
             <Link to='checkout'>
               <div className='flex items-center gap-2 hover:text-orange'>
                 <span className='material-symbols-outlined font-medium'>
