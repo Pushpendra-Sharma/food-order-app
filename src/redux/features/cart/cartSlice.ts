@@ -1,6 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { ITEM } from '../../../utils/types';
 import { POST_ORDER_URL } from '../../../utils/constants';
+import { Action } from '../../store';
 
 interface CartState {
   order: {
@@ -26,7 +27,7 @@ const initialState: CartState = {
   items: {},
 };
 
-type Action = {
+type Cart_Action = {
   type: string;
   payload: ITEM;
 };
@@ -38,18 +39,29 @@ export const placeOrder = createAsyncThunk(`cart/placeOrder`, async data => {
       body: '',
     });
 
-    const jsonResponse = await resp.json();
+    const textResponse = await resp.text();
 
-    const {
-      result: { orderId },
-    } = jsonResponse;
+    /**
+     * textResponse is a string
+     * Example:
+     * {status: "success", result: { orderId: 1232242}, message: "Order successfully created."}
+     *
+     */
+
+    function getIdFromString(str: string) {
+      const strArray = str.split(' ');
+      return strArray[5];
+    }
+
+    let id = getIdFromString(textResponse);
+    id = id.slice(0, id.length - 2);
 
     const prevOrderHistory = localStorage.getItem('orderHistory') || '{}';
     const orderHistoryObject = JSON.parse(prevOrderHistory);
     const timeStamp = Date.now();
     const newObj = {
-      [orderId]: {
-        orderId: orderId,
+      [id]: {
+        orderId: id,
         timeStamp,
       },
     };
@@ -57,7 +69,11 @@ export const placeOrder = createAsyncThunk(`cart/placeOrder`, async data => {
     const newHistory = { ...orderHistoryObject, ...newObj };
     localStorage.setItem('orderHistory', JSON.stringify(newHistory));
 
-    return jsonResponse;
+    return {
+      status: 'success',
+      result: { orderId: id },
+      message: 'Order successfully created.',
+    };
   } catch (error) {
     return error;
   }
@@ -67,7 +83,7 @@ export const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    addItem: (state, action: Action) => {
+    addItem: (state, action: Cart_Action) => {
       const { id } = action.payload;
       if (state.items[id] && state.items[id].quantity > 0) {
         state.items[id].quantity += 1;
@@ -77,7 +93,7 @@ export const cartSlice = createSlice({
           item: action.payload,
         };
     },
-    removeItem: (state, action: Action) => {
+    removeItem: (state, action: Cart_Action) => {
       const { id } = action.payload;
       if (state.items[id].quantity === 1) {
         delete state.items[id];
@@ -97,8 +113,8 @@ export const cartSlice = createSlice({
         state.order.isLoading = true;
         state.order.isSuccess = false;
       })
-      .addCase(placeOrder.fulfilled, (state, action) => {
-        const { status, result, message } = action.payload;
+      .addCase(placeOrder.fulfilled, (state, action: Action) => {
+        const { status, result, message } = action?.payload;
         state.order = {
           isLoading: false,
           isSuccess: true,
