@@ -31,7 +31,7 @@ type Action = {
   payload: ITEM;
 };
 
-export const placeOrder = createAsyncThunk(`cart/placeOrder`, async (data) => {
+export const placeOrder = createAsyncThunk(`cart/placeOrder`, async data => {
   try {
     const resp = await fetch(POST_ORDER_URL, {
       method: 'POST',
@@ -39,6 +39,23 @@ export const placeOrder = createAsyncThunk(`cart/placeOrder`, async (data) => {
     });
 
     const jsonResponse = await resp.json();
+
+    const {
+      result: { orderId },
+    } = jsonResponse;
+
+    const prevOrderHistory = localStorage.getItem('orderHistory') || '{}';
+    const orderHistoryObject = JSON.parse(prevOrderHistory);
+    const timeStamp = Date.now();
+    const newObj = {
+      [orderId]: {
+        orderId: orderId,
+        timeStamp,
+      },
+    };
+
+    const newHistory = { ...orderHistoryObject, ...newObj };
+    localStorage.setItem('orderHistory', JSON.stringify(newHistory));
 
     return jsonResponse;
   } catch (error) {
@@ -81,9 +98,14 @@ export const cartSlice = createSlice({
         state.order.isSuccess = false;
       })
       .addCase(placeOrder.fulfilled, (state, action) => {
-        state.order = action.payload;
-        state.order.isLoading = false;
-        state.order.isSuccess = true;
+        const { status, result, message } = action.payload;
+        state.order = {
+          isLoading: false,
+          isSuccess: true,
+          status,
+          result,
+          message,
+        };
       })
       .addCase(placeOrder.rejected, (state, action) => {
         state.order.isLoading = false;
